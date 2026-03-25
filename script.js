@@ -1,24 +1,32 @@
-//your JS code here. If required.
-let form = document.querySelector("form");
-        let input_value = document.querySelector("#username");
-        let password_value = document.querySelector("#password");
-        let checkbox_value = document.querySelector("#checkbox")
+let btn = document.querySelector("#submit");
+let check = document.querySelector("#checkbox");
+let usernameInput = document.querySelector("#username");
+let passwordInput = document.querySelector("#password");
+let exist_btn = document.querySelector("#existing");
+ exist_btn.style.display = "none";
 
-        form.addEventListener("submit",(e)=>{
-            e.preventDefault();
 
-            if(!checkbox_value.checked){
-                alert("Logged in as <username>")
-            }else{
-               let value1 = input_value.value;
-               let value2 = password_value.value;
 
-               let obj = {
-                v1:value1,
-                v2:value2
-               };
-               let jsonData = JSON.stringify(obj);
-               localStorage.setItem("key",jsonData)
-               
-            }
-        })
+btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    let username = usernameInput.value;
+    let password = passwordInput.value;
+
+    alert("Logged in as " + username);
+
+    if (check.checked) {
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+        exist_btn.style.display = "block";
+    } else {
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+        exist_btn.style.display = "none";
+    }
+});
+
+
+exist_btn.addEventListener("click", function () {
+    let savedUsername = localStorage.getItem("username");
+    alert("Logged in as " + savedUsername);
